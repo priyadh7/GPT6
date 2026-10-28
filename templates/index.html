@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedAssist | Symptom Assistant</title>
+<style>
+:root{--blue:#193e72;--accent:#3567df;--bg:#f3f6fb;--ink:#24334b;--muted:#718096;--border:#e2e8f0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--ink);font-size:13px}
+header{background:var(--blue);color:white;padding:17px max(22px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:15px}
+.logo{font-size:20px;font-weight:750;letter-spacing:.2px}
+.logo span{color:#a8c4ff}
+.tagline{font-size:11px;color:#d7e3f5;margin-top:4px}
+.header-pill{border:1px solid #6e8bb4;border-radius:20px;padding:8px 12px;font-size:11px;white-space:nowrap}
+main{max-width:1120px;margin:25px auto;padding:0 20px}
+.intro,.card,.result{background:white;border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;box-shadow:0 3px 12px #1a315008}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--accent)}
+h1{font-size:26px;margin:9px 0}
+h2{font-size:16px;margin:0 0 5px}
+p{line-height:1.65}
+.muted{color:var(--muted);font-size:12px}
+.disclaimer{border-left:3px solid #e2b84d;background:#fffaf0;padding:11px 13px;font-size:11px;line-height:1.65;margin-top:15px}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+.step{text-align:center;border:1px solid var(--border);border-radius:9px;padding:12px 5px;color:#526581;font-size:11px}
+.num{width:27px;height:27px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center;margin:0 auto 8px;font-weight:bold}
+.section-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.number{width:32px;height:32px;display:grid;place-items:center;background:var(--blue);color:white;border-radius:8px;font-weight:bold}
+.section-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+label{display:block;font-weight:650;font-size:12px;margin:0 0 7px}
+.field{min-width:0}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d9e1ed;border-radius:7px;background:white;color:var(--ink);font:12px Segoe UI,Arial;outline:none}
+textarea{resize:vertical;min-height:76px;line-height:1.6}
+input:focus,select:focus,textarea:focus{border-color:#7593ee;box-shadow:0 0 0 3px #edf1ff}
+.full{grid-column:1/-1}
+.hint{font-size:10px;color:var(--muted);margin-top:6px}
+.btn{border:0;border-radius:8px;padding:13px 18px;font-size:12px;font-weight:700;cursor:pointer}
+.primary{background:var(--blue);color:white;width:100%;margin-top:18px}
+.primary:hover{background:#244f8e}
+.secondary{background:white;color:var(--blue);border:1px solid #cdd7e8}
+.error{padding:13px;background:#fff0f0;border:1px solid #ffd1d1;color:#9f2525;border-radius:8px;margin-bottom:15px}
+.result-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.status{background:#e8f7ee;color:#24734d;border-radius:20px;padding:7px 10px;font-size:10px}
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:20px}
+.result-box{background:#f7f9fd;border:1px solid #e8edf5;border-radius:9px;padding:16px;min-width:0}
+.result-box h3{font-size:11px;color:#38557e;letter-spacing:.6px;margin:0 0 10px}
+.result-box p,.result-box li{font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.result-box p{white-space:pre-wrap;margin:0}
+.result-box ul{padding-left:18px;margin:0}
+.wide{grid-column:1/-1}
+.summary{background:#f1f5ff;border-color:#dbe5ff}
+.safety{background:#fff9e9;border-color:#f4e5b8}
+.safety h3{color:#795a15}
+footer{text-align:center;color:#8490a3;font-size:10px;padding:18px}
+@media(max-width:680px){header{padding:15px 18px}.header-pill{display:none}main{padding:0 12px}.workflow{grid-template-columns:repeat(2,1fr)}.grid,.result-grid{grid-template-columns:1fr}.full,.wide{grid-column:auto}h1{font-size:22px}.intro,.card,.result{padding:17px}}
+</style>
+</head>
+<body>
+<header>
+ <div>
+  <div class="logo">Med<span>Assist</span></div>
+  <div class="tagline">AI-POWERED MEDICAL INFORMATION ASSISTANT</div>
+ </div>
+ <div class="header-pill">Local AI prototype</div>
+</header>
+
+<main>
+ <section class="intro">
+  <div class="eyebrow">HEALTH INFORMATION WORKSPACE</div>
+  <h1>Understand your symptoms.</h1>
+  <p class="muted">Enter symptom details and relevant patient context to generate a structured, educational health-information report.</p>
+  <div class="disclaimer"><strong>Important:</strong> This tool cannot diagnose medical conditions. It provides general information only and is not a substitute for professional medical advice.</div>
+ </section>
+
+ <section class="card">
+  <h2>Analysis workflow</h2>
+  <p class="muted">From symptom entry to a structured report.</p>
+  <div class="workflow">
+   <div class="step"><div class="num">01</div>Patient Information</div>
+   <div class="step"><div class="num">02</div>Symptom Input</div>
+   <div class="step"><div class="num">03</div>Context Analysis</div>
+   <div class="step"><div class="num">04</div>AI Analysis</div>
+   <div class="step"><div class="num">05</div>Saved Report</div>
+  </div>
+ </section>
+
+ {% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+ <form method="POST">
+  <section class="card">
+   <div class="section-heading">
+    <div class="number">01</div>
+    <div><h2>Patient Information</h2><div class="section-sub">Enter basic information relevant to the symptoms.</div></div>
+   </div>
+   <div class="grid">
+    <div class="field"><label for="age">Age *</label><input id="age" name="age" type="number" min="0" max="120" required value="{{ patient.age }}" placeholder="e.g. 22"></div>
+    <div class="field"><label for="sex">Sex (optional)</label><select id="sex" name="sex"><option value="">Prefer not to say</option><option value="Female" {% if patient.sex == 'Female' %}selected{% endif %}>Female</option><option value="Male" {% if patient.sex == 'Male' %}selected{% endif %}>Male</option><option value="Other" {% if patient.sex == 'Other' %}selected{% endif %}>Other</option></select></div>
+    <div class="field"><label for="medical_history">Medical History</label><textarea id="medical_history" name="medical_history" placeholder="Relevant conditions, or none known">{{ patient.medical_history }}</textarea></div>
+    <div class="field"><label for="medication">Current Medication</label><textarea id="medication" name="medication" placeholder="Optional; do not include unnecessary personal details">{{ patient.medication }}</textarea></div>
+    <div class="field full"><label for="allergies">Allergies</label><textarea id="allergies" name="allergies" placeholder="Known allergies, or none known">{{ patient.allergies }}</textarea></div>
+   </div>
+  </section>
+
+  <section class="card">
+   <div class="section-heading">
+    <div class="number">02</div>
+    <div><h2>Symptom Input</h2><div class="section-sub">Describe the symptoms and their characteristics.</div></div>
+   </div>
+   <div class="grid">
+    <div class="field full"><label for="symptoms">Symptoms *</label><textarea id="symptoms" name="symptoms" required placeholder="Describe what you are experiencing, such as fever, cough or headache">{{ patient.symptoms }}</textarea><div class="hint">You can enter multiple symptoms in natural language.</div></div>
+    <div class="field"><label for="duration">Duration *</label><select id="duration" name="duration" required><option value="">Select duration</option>{% for x in ['Less than 24 hours','1–2 days','3–7 days','More than a week','Recurring or intermittent'] %}<option value="{{ x }}" {% if patient.duration == x %}selected{% endif %}>{{ x }}</option>{% endfor %}</select></div>
+    <div class="field"><label for="severity">Severity *</label><select id="severity" name="severity" required><option value="">Select severity</option>{% for x in ['Mild','Moderate','Severe'] %}<option value="{{ x }}" {% if patient.severity == x %}selected{% endif %}>{{ x }}</option>{% endfor %}</select></div>
+    <div class="field full"><label for="additional_info">Additional Information</label><textarea id="additional_info" name="additional_info" placeholder="Other symptoms, relevant measurements, or circumstances">{{ patient.additional_info }}</textarea></div>
+   </div>
+   <button class="btn primary" type="submit">Analyze Symptoms &nbsp; →</button>
+  </section>
+ </form>
+
+ {% if report %}
+ <section class="result">
+  <div class="result-title">
+   <div><h2>Complete Structured Analysis</h2><p class="muted">Generated {{ report.generated_at }}</p></div>
+   <span class="status">Analysis complete</span>
+  </div>
+  <form method="POST" action="/download">
+   <input type="hidden" name="report_json" value="{{ report|tojson|forceescape }}">
+   <button class="btn secondary" type="submit">Download Report ↓</button>
+  </form>
+
+  <div class="result-grid">
+   <div class="result-box">
+    <h3>EXTRACTED SYMPTOMS</h3>
+    {% if report.extracted_symptoms %}<ul>{% for x in report.extracted_symptoms %}<li>{{ x }}</li>{% endfor %}</ul>{% else %}<p>Not specified.</p>{% endif %}
+   </div>
+   <div class="result-box">
+    <h3>POSSIBLE EXPLANATIONS</h3>
+    {% if report.possible_conditions %}<ul>{% for x in report.possible_conditions %}<li>{{ x }}</li>{% endfor %}</ul>{% else %}<p>Insufficient information.</p>{% endif %}
+   </div>
+   <div class="result-box wide"><h3>WHY THESE WERE CONSIDERED</h3><p>{{ report.why_considered or 'More information may be needed.' }}</p></div>
+   <div class="result-box">
+    <h3>FOLLOW-UP QUESTIONS</h3>
+    {% if report.follow_up_questions %}<ul>{% for x in report.follow_up_questions %}<li>{{ x }}</li>{% endfor %}</ul>{% else %}<p>No questions generated.</p>{% endif %}
+   </div>
+   <div class="result-box">
+    <h3>GENERAL SELF-CARE</h3>
+    {% if report.general_self_care %}<ul>{% for x in report.general_self_care %}<li>{{ x }}</li>{% endfor %}</ul>{% else %}<p>Consult a healthcare professional for advice appropriate to your situation.</p>{% endif %}
+   </div>
+   <div class="result-box wide safety"><h3>MEDICAL ATTENTION GUIDANCE</h3><p>{{ report.medical_attention or 'Seek professional medical advice if symptoms are concerning, worsening or persistent.' }}</p></div>
+   <div class="result-box wide summary"><h3>SUMMARY</h3><p>{{ report.summary or 'No summary available.' }}</p></div>
+   <div class="result-box wide"><h3>DISCLAIMER</h3><p>This AI-generated report is for general educational information only. It is not a diagnosis and does not replace a qualified healthcare professional. If symptoms are severe or rapidly worsening, seek urgent medical attention.</p></div>
+  </div>
+ </section>
+ {% endif %}
+
+ <footer>MedAssist · Educational AI prototype · Not for emergency use or medical diagnosis</footer>
+</main>
+</body>
+</html>
